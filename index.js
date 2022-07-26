@@ -14,6 +14,12 @@ connection();
 app.use(express.json());
 app.use(cors());
 
+//common call
+app.get("/",(req,res)=>{
+    res.status(200).send("Server is running Successfully")
+});
+
+
 // routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
