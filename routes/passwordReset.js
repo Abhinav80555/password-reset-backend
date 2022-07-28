@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
 				token: crypto.randomBytes(32).toString("hex"),
 			}).save();
 		}
-		const url = `${BASE_URLF}/password-reset/${user._id}/${token.token}/`;
+		const url = `https://fanciful-brioche-6c2005.netlify.app/password-reset/${user._id}/${token.token}/`;
 		await sendEmail(user.email, "Password Reset", url);
 
 		res

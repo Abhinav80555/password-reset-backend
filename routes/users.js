@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
 			userId: user._id,
 			token: crypto.randomBytes(32).toString("hex"),
 		}).save();
-		const url = `${process.env.BASE_URLB}/api/users/${user.id}/verify/${token.token}/`;
+		const url = `https://password-reset-task.herokuapp.com/api/users/${user.id}/verify/${token.token}/`;
 		await sendEmail(user.email, "Verify Email", url);
 
 		res
@@ -52,7 +52,7 @@ router.get("/:id/verify/:token/", async (req, res) => {
 		await User.updateOne({ _id: user._id},{verified: true });
 		await token.remove();
 
-		res.redirect(`${BASE_URLF}/login`)
+		res.redirect("https://fanciful-brioche-6c2005.netlify.app/login")
 		// res.status(200).send({ message: "Email verified successfully" });
 	} catch (error) {
 		res.status(500).send({ message: "Internal Server Error" });
