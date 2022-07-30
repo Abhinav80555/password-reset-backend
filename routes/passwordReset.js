@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
 			token = await new Token({
 				userId: user._id,
 				token: crypto.randomBytes(32).toString("hex"),
-				longUrl:`http://localhost:3000/password-reset/${user._id}`,
+				longUrl:`https://fanciful-brioche-6c2005.netlify.app/password-reset/${user._id}`,
                 shortUrl: generateUrlReset()
 
 			}).save();
