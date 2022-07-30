@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const connection = require("./db");
 const userRoutes = require("./routes/users");
+const shortRoutes = require("./routes/short");
 const authRoutes = require("./routes/auth");
 const passwordResetRoutes = require("./routes/passwordReset");
 
@@ -22,6 +23,7 @@ app.get("/",(req,res)=>{
 
 // routes
 app.use("/api/users", userRoutes);
+app.use("/s", shortRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/password-reset", passwordResetRoutes);
 

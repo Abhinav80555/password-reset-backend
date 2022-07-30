@@ -9,6 +9,14 @@ const tokenSchema = new Schema({
 		unique: true,
 	},
 	token: { type: String, required: true },
+	longUrl: {
+        type: String,
+        required: true
+    },
+    shortUrl: {
+        type: String,
+        unique : true
+    },
 	createdAt: { type: Date, default: Date.now, expires: 3600 },
 });
 

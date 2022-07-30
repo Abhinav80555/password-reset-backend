@@ -28,11 +28,16 @@ router.post("/", async (req, res) => {
 			token = await new Token({
 				userId: user._id,
 				token: crypto.randomBytes(32).toString("hex"),
+				longUrl:`http://localhost:3000/password-reset/${user._id}`,
+                shortUrl: generateUrlReset()
+
 			}).save();
 		}
-		const url = `https://fanciful-brioche-6c2005.netlify.app/password-reset/${user._id}/${token.token}/`;
-		await sendEmail(user.email, "Password Reset", url);
+		// const url = `https://fanciful-brioche-6c2005.netlify.app/password-reset/${user._id}/${token.token}/`;
+		const url = `https://password-reset-task.herokuapp.com/s/${token.shortUrl}/r`
 
+		await sendEmail(user.email, "Password Reset", url);
+		
 		res
 			.status(200)
 			.send({ message: "Password reset link sent to your email account" });
@@ -86,11 +91,28 @@ router.post("/:id/:token", async (req, res) => {
 		user.password = hashPassword;
 		await user.save();
 		await token.remove();
+		await User.findByIdAndUpdate({ _id: user.id },{ $inc: { clickCountReset: 1 }});
 
 		res.status(200).send({ message: "Password reset successfully" });
 	} catch (error) {
 		res.status(500).send({ message: "Internal Server Error" });
 	}
 });
+
+
+
+
+function generateUrlReset() {
+    var rndResult = "";
+    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+
+    for (var i = 0; i < 5; i++) {
+        rndResult += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+        );
+    }
+    return rndResult
+}
 
 module.exports = router;
