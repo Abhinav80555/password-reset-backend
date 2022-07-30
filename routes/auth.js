@@ -30,8 +30,8 @@ router.post("/", async (req, res) => {
 					userId: user._id,
 					token: crypto.randomBytes(32).toString("hex"),
 				}).save();
-				// const url = `${process.env.BASE_URLB}/users/${user._id}/verify/${token.token}`;
-				const url = `https://password-reset-task.herokuapp.com/users/${user._id}/verify/${token.token}`;
+				const url = `${process.env.BASE_URLB}/users/${user._id}/verify/${token.token}`;
+				// const url = `https://password-reset-task.herokuapp.com/users/${user._id}/verify/${token.token}`;
 				await sendEmail(user.email, "Verify Email", url);
 			}
 			
